@@ -238,5 +238,4 @@ return [
     'wlar_request_consent_publication' => false,
     'wlar_additional_reading_enabled' => false,
     'wlar_test_recording_enabled' => false,
-
 ];

@@ -232,10 +232,11 @@ return [
     ],
 
     'wlar_languages' => [
-            [ "name" => "English", "id" => "en" ]
-        ],
+        [ "name" => "English", "id" => "en" ],
+        [ "name" => "Français", "id" => "fr"]
+    ],
     'wlar_email_required' => false,
     'wlar_request_consent_publication' => false,
-    'wlar_additional_reading_enabled' => false,
+    'wlar_additional_reading_enabled' => true,
     'wlar_test_recording_enabled' => false,
 ];

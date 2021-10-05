@@ -27,8 +27,8 @@
 
                         <table width="100%">
                             <tr><th>ID</th><td>{{ $consent_form->id }}</td></tr>
-                            <tr><th>Name</th><td>{{ $consent_form->name }}</td></tr>
-                            <tr><th>Email</th><td>{{ $consent_form->email }}</td></tr>
+                            <tr><th>Email for map</th><td>{{ $consent_form->email_for_map }}</td></tr>
+                            <tr><th>Email for gift</th><td>{{ $consent_form->email_for_gift }}</td></tr>
                             <tr><th>Language</th><td>{{ $consent_form->language }}</td></tr>
                             @if(config('app.wlar_request_consent_publication'))
                             <tr><th>Publication Permission</th><td>{{ $consent_form->public ? "granted" : "withheld" }}</td></tr>
@@ -44,7 +44,7 @@
                     <div class="float-right"><a href="{{ route ('demographic_questionnaires.destroy-get', $demographic_questionnaire->id) }}" class="btn btn-info" title="Delete this questionnaire" onclick="return confirm('Are you sure you wish to delete this questionnaire? This cannot be undone!')"><i class="fas fa-trash-alt"></i></a></div>
                     </div>
                         <div class="card-body">
-                            <table width="100%">
+                            <table style="width:100%;">
                                 @foreach ($demographic_questionnaire->toArray() as $key => $demo)
                                     @if ($key != "id" && $key != "consent_form_id" && $key != "updated_at" && $key != "created_at")
                                     <tr><th>{{ $key }}</th><td>{{ $demo }}</td></tr>
@@ -60,7 +60,7 @@
                     </div>
                         <div class="card-body">
                             @if (!$recordings->isEmpty())
-                            <table width="100%">
+                            <table style="width:100%;">
                                 <tr><th>ID</th><th>Player</th><th>Actions</th></tr>
                             @endif
                                 @forelse ($recordings as $recording)
@@ -74,7 +74,7 @@
                                     @empty
                                     No recordings have been submitted under this consent form.
                                 @endforelse
-                            @if (!$recordings->isEmpty())   
+                            @if (!$recordings->isEmpty())
                                 </table>
                             @endif
                         </div>

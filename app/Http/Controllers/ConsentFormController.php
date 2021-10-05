@@ -24,27 +24,29 @@ class ConsentFormController extends Controller
     /**
      * Save the user's consent form
      */
+    //TODO: rewrite
     public function store(Request $request)
-    {     
+    {
         // define variables and set to empty values
-        $name = $email = $code = "";
+        //$name = $email = $code = "";
 
-        $public = false;
-          
-        $name = $request->user_name;
-        $email = $request->user_email;
-        if ($request->share_box == "on") {
-            $public = true;
-        };
+        //$public = false;
+        $email_for_map = $request->email_map;
+        $email_for_gift = $request->email_gift;
+        //$name = $request->user_name;
+        //$email = $request->user_email;
+        //if ($request->share_box == "on") {
+        //    $public = true;
+        //};
         $language = \App::getLocale();
 
         $testModel = ConsentForm::create([
-            'name' => $name,
-            'email' => $email,
-            'public' => $public,
+            'email_for_map' => $email_for_map,
+            'email_for_gift' => $email_for_gift,
+            //'public' => $public,
             'language' => $language
         ]);
-          
+
         $request->session()->put('user_id', $testModel->getKey());
 
         return redirect()->route('demographic_questionnaires.create');
@@ -104,24 +106,19 @@ class ConsentFormController extends Controller
                 }
                 $consentForms[] = $consentForm;
         }
-
-
-
-
         //Log::info("Consent forms content is " . json_encode($consentForms));
 
         return view('consent_forms_list',
             [ 'consent_forms' => $consentForms ]);
     }
 
-    public function export() 
+    public function export()
     {
         if (Gate::allows('manage-data')) {
             return Excel::download(new ConsentFormsExport, 'submissions.csv');
         }
-        
         return redirect('admin')->with('error', 'You are not currently authorized to manage submissions!');
     }
 
-    
+
 }

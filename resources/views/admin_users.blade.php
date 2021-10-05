@@ -23,12 +23,12 @@
                     {{ Auth::user()->authorized ? '' : 'You are not authorized to access data - another administrator must authorize you!' }}
 
                     @if (Auth::user()->authorized && Gate::allows('manage-users'))
-                    <table width="100%"><tr><th>ID</th><th>Name</th><th>Email</th><th colspan=2>Status / Actions</th></tr>
+                    <table style="width:100%;"><tr><th>ID</th><th>Name</th><th>Email</th><th colspan=2>Status / Actions</th></tr>
                          @foreach ($users as $user)
                     <tr><td>{{ $user->id }}</td><td>{{ $user->name }}</td><td>{{ $user->email }}</td>
                         <td>
                             @if ($user->authorized)
-                                Authorized 
+                                Authorized
                                 @if (Auth::user() != $user)
                                     (<a href="{{ route ('admin_users.deauthorize', $user->id) }}">Deauthorize</a>)
                                 @endif

@@ -22,5 +22,5 @@
 </p>
 <hr>
 <p>
-    Merci d'avoir lu ce passage! Une fois la lecture enregistrée et envoyée, cliquez sur l'onglet « enregistrement libre » pour la troisième et dernière partie de cette étude.
+    Merci d'avoir lu ce passage ! Une fois la lecture enregistrée et envoyée, cliquez sur l'onglet « enregistrement libre » pour la troisième et dernière partie de cette étude.
 </p>

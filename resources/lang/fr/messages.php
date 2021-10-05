@@ -13,7 +13,7 @@ return [
     "ConsentName" => "Name:",
     "ConsentEmail" => "Email:",
     "EmailForMap" => "Si vous aimeriez recevoir la page web une fois qu'elle est prête et disponible en ligne, vous pouvez nous laisser votre adresse courriel :",
-    "EmailForGift" => "Pour courir la chance de gagner une carte-cadeau de 100$ chez Les libraires (<a href='www.leslibraires.ca'>www.leslibraires.ca</a>), une coopérative de librairies indépendantes du Québec et des Maritimes, veuillez écrire à nouveau votre adresse courriel :",
+    "EmailForGift" => "Pour courir la chance de gagner une carte-cadeau de 100$ chez Les libraires (<a href='www.leslibraires.ca' target='_blank'>www.leslibraires.ca</a>), une coopérative de librairies indépendantes du Québec et des Maritimes, veuillez écrire à nouveau votre adresse courriel :",
     "ConsentParticipationConsent" => "I have read the consent form above and consent to participate.",
     "ConsentPublication" => "2. Consent to publish excerpts from recordings",
     "ConsentPublicationConsent" => "I consent to excerpts of my recordings being published. (Optional)",

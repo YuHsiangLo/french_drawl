@@ -3,7 +3,7 @@
 // resources/lang/en/messages.php
 
 return [
-    "IndexTitle" => "Atlas Sonore des Variétés de Français du Canada",
+    "IndexTitle" => "Atlas sonore des variétés de français du Canada",
     "IndexLink" => "Participer au projet.",
     "SelectLanguageTitle" => "Select Language",
     "WelcomeTitle" => "Bienvenue",

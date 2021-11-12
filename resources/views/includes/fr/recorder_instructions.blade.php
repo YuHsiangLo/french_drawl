@@ -1,5 +1,5 @@
 <p>
-    Avant de vous lancez dans les enregistrements, faisons d'abord un <strong>test</strong>!
+    Avant de vous lancer dans les enregistrements, faisons d'abord un <strong>test</strong>!
 </p>
 <p>
     Le panel d'enregistrement se trouve à la droite de votre écran (ou en bas, si vous utilisez un téléphone portable). Il y a deux fenêtres noires en haut à droite de l'écran ; la fenêtre du dessus vous permet de visualiser le volume du son enregistré et la fenêtre du dessous vous montre l'enregistrement le plus récent. Sous les deux fenêtres, il y a un lecteur média, une icône de micro pour <strong>lancer et arrêter l'enregistrement</strong> et une icône d'une boîte pour <strong>envoyer l'enregistrement</strong>. Pour commencer un enregistrement, cliquez sur l'icône du micro ; il deviendra rouge, ce qui indique que l'enregistrement est démarré. Vous pouvez ensuite lire ou parler. Lorsque vous avez terminé l'enregistrement, cliquez à nouveau sur l'icône du micro pour arrêter l'enregistrement.

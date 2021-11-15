@@ -15,7 +15,7 @@
             <div class="form-group col-md-6">
                 <label for="gender"><strong>2.</strong> À quel genre vous identifiez-vous ?*</label>
                 <div class="form-check">
-                    <input name="Gender" type="radio" class="form-check-input" value="male" id="choice_female" required><label class="form-check-label" for="choice_female" id="label_female">femme</label>
+                    <input name="Gender" type="radio" class="form-check-input" value="female" id="choice_female" required><label class="form-check-label" for="choice_female" id="label_female">femme</label>
                 </div>
                 <div class="form-check">
                     <input name="Gender" type="radio" class="form-check-input" value="male" id="choice_male" required><label class="form-check-label" for="choice_male" id="label_male">homme</label>

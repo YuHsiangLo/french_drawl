@@ -8,7 +8,7 @@
     Si, pour quelque raison que ce soit, l'enregistrement ne fonctionne pas ou si vous recevez un message d'erreur, veuillez essayer avec un autre navigateur web. (Mais nous croisons nos doigts pour que vous n'ayez pas de problèmes techniques !)
 </p>
 <p>
-    En tant que sociolinguistes, nous nous intéressons à la manière dont vous parlez naturellement. Et quand on parle naturellement, parfois, on fait des erreurs, on bégaie et on mange nos mots. Mais ce n'est pas grave, même pour ces enregistrements. Donc, si vous faires une erreur, pas la peine de recommencer. Corrigez simplement l'erreur à l'oral comme vous le feriez dans le cadre d'une conversation. Aussi, il n'est pas nécessaire de vous exercer avant d'enregistrer votre voix. Nous voulons vous entendre le plus naturellement possible. Mais si jamais votre enregistrement est incomplet ou s'il est envoyé prématurément ou s'il ne vous plaît pas, vous pouvez recommencer et lancer un nouvel enregistrement.
+    En tant que sociolinguistes, nous nous intéressons à la manière dont vous parlez naturellement. Et quand on parle naturellement, parfois, on fait des erreurs, on bégaie et on mange nos mots. Mais ce n'est pas grave, même pour ces enregistrements. Donc, si vous faites une erreur, pas la peine de recommencer. Corrigez simplement l'erreur à l'oral comme vous le feriez dans le cadre d'une conversation. Aussi, il n'est pas nécessaire de vous exercer avant d'enregistrer votre voix. Nous voulons vous entendre le plus naturellement possible. Mais si jamais votre enregistrement est incomplet ou s'il est envoyé prématurément ou s'il ne vous plaît pas, vous pouvez recommencer et lancer un nouvel enregistrement.
 </p>
 <p style="text-align: center;">
     Alors, prêt.e pour faire un test ?

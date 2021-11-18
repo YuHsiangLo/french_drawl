@@ -56,4 +56,5 @@ return [
     "RecorderUploadSuccessful" => "Téléchargement réussi !",
     "RecorderUploadThankYou" => "Si vous avez des enregistrements supplémentaires à compléter et à soumettre, cliquez sur Ok pour revenir à l'interface et procéder à leur enregistrement.<br><br>S'il s'agissait de votre dernier enregistrement, merci d'avoir participé ! Vous pouvez maintenant fermer cette fenêtre.",
     "RecorderBrowserError" => "Désolé, votre navigateur Web ne semble pas prendre en charge l'API Web Audio. L'enregistrement en ligne ne fonctionnera pas. Veuillez essayer de mettre à jour votre navigateur ou essayez un autre navigateur.",
+    "MapTitle" => "Dialect Map"
 ];

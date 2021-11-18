@@ -20,7 +20,7 @@ Route::get('/demographic_questionnaires/create','DemographicQuestionnaireControl
 Route::post('/demographic_questionnaires','DemographicQuestionnaireController@store')->name('demographic_questionnaires.store');
 Route::get('/recordings/create','RecordingController@create')->name('recordings.create');
 Route::post('/recordings','RecordingController@store')->name('recordings.store');
-
+Route::get('/map','MapController@show')->name('map.show');
 
 Auth::routes();
 

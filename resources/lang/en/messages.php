@@ -56,5 +56,5 @@ return [
     "RecorderUploadSuccessful" => "Upload Successful!",
     "RecorderUploadThankYou" => "If you still have additional recordings to complete and submit, click OK to return to the interface and proceed with recording them.<br><br>If this was your final recording, thank you for participating! You may now close this window.",
     "RecorderBrowserError" => "Sorry, your web browser does not seem to support Web Audio API. The online recorder will not function. Please try upgrading your browser, or try a different browser.",
-
+    "MapTitle" => "Dialect Map"
 ];

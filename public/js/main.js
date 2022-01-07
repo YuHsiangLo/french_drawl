@@ -60,7 +60,7 @@ function doneEncoding(blob) {
     currentAudio.controls = true;
     currentAudio.src = url;
 
-    var audioPlayer = document.getElementById('audioplayer')
+    var audioPlayer = document.getElementById('audioplayer');
     audioPlayer.appendChild(currentAudio);
 
     var submitbutton = document.getElementById('save');
@@ -121,8 +121,8 @@ function toggleRecording(e) {
     if (e.classList.contains("recording")) {
         // stop recording
         audioRecorder.stop();
-        // audioContext.close();
-        // gumStream.getAudioTracks()[0].stop();
+        audioContext.close();
+        gumStream.getAudioTracks()[0].stop();
         recording = false;
         e.classList.remove("recording");
         audioRecorder.getBuffers(gotBuffers);
@@ -156,8 +156,10 @@ function toggleRecording(e) {
 
         e.classList.add("recording");
 
-        audioRecorder.clear();
-        audioRecorder.record();
+        startRecording();
+
+        //audioRecorder.clear();
+        //audioRecorder.record();
         recording = true;
 
         $("#rectext").text(Lang.get('messages.RecorderStop'));
@@ -266,7 +268,7 @@ function gotStream(stream, locale) {
     var activateAudio = document.getElementById('activate-audio');
     firstStep.innerHTML = '<p>' + Lang.get('messages.RecorderMicInputCheckAbove') + '</p><p><div id="my-peak-preview-meter" style="width: 400px; height: 50px; background: #202020;"></div></p><p>' + Lang.get("messages.RecorderMicInputCheckBelow") + '</p><p>' + Lang.get("messages.RecorderMicInputCheckNoSignal") + '</p>';
     wizardTitle.innerHTML = Lang.get('messages.RecorderMicInputCheckTitle');
-    activateAudio.innerHTML = '<button type="button" class="btn btn-info" data-dismiss="modal">' + Lang.get("messages.OK") + '</button>';
+    activateAudio.innerHTML = '<button type="button" class="btn btn-info" data-dismiss="modal" onclick="onOk();">' + Lang.get("messages.OK") + '</button>';
 
     // create volume meter in jquery popup
     var previewMeter = webAudioPeakMeter();
@@ -274,14 +276,21 @@ function gotStream(stream, locale) {
     var meterPreviewNode = previewMeter.createMeterNode(realAudioInput, audioContext);
     previewMeter.createMeter(myMeterPreviewElement, meterPreviewNode, {});
 
-    createPeakMeter();
+    //createPeakMeter();
 
-    inputPoint = audioContext.createGain();
+    //inputPoint = audioContext.createGain();
 
     // Create an AudioNode from the stream.
-    realAudioInput = audioContext.createMediaStreamSource(stream);
-    audioInput = realAudioInput;
-    audioInput.connect(inputPoint);
+    //realAudioInput = audioContext.createMediaStreamSource(stream);
+    //audioInput = realAudioInput;
+    //audioInput.connect(inputPoint);
+}
+
+function onOk() {
+    audioRecorder.stop();
+    audioContext.close();
+    gumStream.getAudioTracks()[0].stop();
+    recording = false;
 }
 
 function createPeakMeter() {
@@ -328,5 +337,63 @@ function initAudio(locale) {
     .catch(function(e) {
             alert('Error getting audio');
             console.log(e);
+    });
+}
+
+function startRecording() {
+    // Older browsers might not implement mediaDevices at all, so we set an empty object first
+    if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {};
+    }
+
+    // Some browsers partially implement mediaDevices. We can't just assign an object
+    // with getUserMedia as it would overwrite existing properties.
+    // Here, we will just add the getUserMedia property if it's missing.
+    if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = function(constraints) {
+
+            // First get ahold of the legacy getUserMedia, if present
+            var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+            // Some browsers just don't implement it - return a rejected promise with an error
+            // to keep a consistent interface
+            if (!getUserMedia) {
+                window.alert(browserError);
+                return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+            }
+
+            // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+            return new Promise(function(resolve, reject) {
+                getUserMedia.call(navigator, constraints, resolve, reject);
+            });
+        }
+    }
+
+    navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function(stream) {
+        audioContext = new AudioContext();
+        inputPoint = audioContext.createGain();
+        realAudioInput = audioContext.createMediaStreamSource(stream);
+        audioInput = realAudioInput;
+        audioInput.connect(inputPoint);
+        gumStream = stream;
+        analyserNode = audioContext.createAnalyser();
+        analyserNode.fftSize = 2048;
+        inputPoint.connect(analyserNode);
+
+        audioRecorder = new Recorder(inputPoint, {numChannels: 1});
+
+        zeroGain = audioContext.createGain();
+        zeroGain.gain.value = 0.0;
+        inputPoint.connect(zeroGain);
+        zeroGain.connect(audioContext.destination);
+        //updateAnalysers();
+        audioRecorder.clear();
+        audioRecorder.record();
+
+        //createPeakMeter();
+
+    }).catch(function(e) {
+        alert('Error getting audio');
+        console.log(e);
     });
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             @if (Auth::user()->authorized && Gate::allows('manage-data'))
             <div class="card">
                 <div class="card-header">All Submissions</div>

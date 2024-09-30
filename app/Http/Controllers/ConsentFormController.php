@@ -124,19 +124,42 @@ class ConsentFormController extends Controller
     }
 
     public function download_all_recordings() {
-        $zip = new \ZipArchive();
-        $fileName = 'frenchDRAWL_recordings.zip';
-        $recordings = Recording::all();
-        if ($zip->open(public_path($fileName), \ZipArchive::CREATE) === true) {
-            foreach ($recordings as $recording) {
-                $zip->addFile(
-                    storage_path('app/audio/' . $recording->consent_form_id . '/' . $recording->recording_filename),
-                    'audio/'.$recording->consent_form_id.'/'.$recording->recording_filename
-                );
+        if (Gate::allows('manage-data')) {
+            $zip = new \ZipArchive();
+            $fileName = 'frenchDRAWL_recordings.zip';
+            $recordings = Recording::all();
+            if ($zip->open(public_path($fileName), \ZipArchive::CREATE) === true) {
+                foreach ($recordings as $recording) {
+                    $zip->addFile(
+                        storage_path('app/audio/' . $recording->consent_form_id . '/' . $recording->recording_filename),
+                        'audio/' . $recording->consent_form_id . '/' . $recording->recording_filename
+                    );
+                }
+                $zip->close();
             }
-            $zip->close();
-        }
 
-        return response()->download(public_path($fileName))->deleteFileAfterSend(true);
+            return response()->download(public_path($fileName))->deleteFileAfterSend(true);
+        }
+        return redirect('admin')->with('error', 'You are not currently authorized to manage submissions!');
+    }
+
+    public function download_recording($id) {
+        if (Gate::allows('manage-data')) {
+            $zip = new \ZipArchive();
+            $fileName = 'frenchDRAWL_recording_'.$id.'.zip';
+            $recordings = app(\App\Recording::class)->where('consent_form_id', $id)->get();
+            if ($zip->open(public_path($fileName), \ZipArchive::CREATE) === true) {
+                foreach ($recordings as $recording) {
+                    $zip->addFile(
+                        storage_path('app/audio/'.$recording->consent_form_id.'/'.$recording->recording_filename),
+                        'audio/'.$recording->consent_form_id.'/'.$recording->recording_filename
+                    );
+                }
+                $zip->close();
+            }
+
+            return response()->download(public_path($fileName))->deleteFileAfterSend(true);
+        }
+        return redirect('admin')->with('error', 'You are not currently authorized to manage submissions!');
     }
 }

@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.2.5|^8.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0",
@@ -18,7 +18,9 @@
         "maatwebsite/excel": "^3.1",
         "mariuzzo/laravel-js-localization": "^1.7",
         "mjducharme/laravel-model-json-storage": "^1.0",
-        "nebed/laravel-ua-parser": "^1.0"
+        "nebed/laravel-ua-parser": "^1.0",
+        "revolution/laravel-google-sheets": "^6.0",
+        "ext-zip": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

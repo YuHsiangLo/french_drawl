@@ -157,7 +157,7 @@ class ConsentFormController extends Controller
                 foreach ($recordings as $recording) {
                     $zip->addFile(
                         storage_path('app/audio/'.$recording->consent_form_id.'/'.$recording->recording_filename),
-                        'audio/'.$recording->consent_form_id.'/'.$recording->id.'_'.$recording->recording_filename
+                        'audio_'.$recording->consent_form_id.'/'.$recording->consent_form_id.'/'.$recording->id.'_'.$recording->recording_filename
                     );
                 }
                 $zip->close();

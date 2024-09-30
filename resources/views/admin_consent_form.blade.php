@@ -69,7 +69,7 @@
                                     <tr><td>{{ $recording->id }}</td><td><audio controls preload="metadata" style=" width:500px;">
                                         <source src="{{ Storage::url('audio/' . $recording->consent_form_id . '/' . $recording->recording_filename) }}" type="audio/wav">
                                         Your browser does not support the audio element.
-                                    </audio><br /></td><td><a href="{{ Storage::download('audio/' . $recording->consent_form_id . '/' . $recording->recording_filename) }}" class="btn btn-info" title="Download"><i class="fas fa-download"></i></a> <a href="{{ route ('recordings.destroy-get', $recording->id) }}" class="btn btn-info" title="Delete recording" onclick="return confirm('Are you sure you wish to delete this recording? This cannot be undone!')"><i class="fas fa-trash-alt"></i></a></td></tr>
+                                    </audio><br /></td><td><a href="{{ Storage::url('audio/' . $recording->consent_form_id . '/' . $recording->recording_filename) }}" class="btn btn-info" title="Download"><i class="fas fa-download"></i></a> <a href="{{ route ('recordings.destroy-get', $recording->id) }}" class="btn btn-info" title="Delete recording" onclick="return confirm('Are you sure you wish to delete this recording? This cannot be undone!')"><i class="fas fa-trash-alt"></i></a></td></tr>
                                     {{-- @endif --}}
                                     @empty
                                     No recordings have been submitted under this consent form.

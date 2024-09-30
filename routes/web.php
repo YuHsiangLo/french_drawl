@@ -39,5 +39,6 @@ Route::get('/recordings/{id}/destroy','RecordingController@destroy')->name('reco
 Route::get('/storage/{file_name}', 'FileController')->where(['file_name' => '.*']);
 
 Route::get('/export/consent_forms', 'ConsentFormController@export')->name('consent_forms.export')->middleware('auth');
+Route::get('/download/recordings', 'ConsentFormController@download_all_recordings')->name('consent_forms.download_all_recordings')->middleware('auth');
 
 Route::get('/deploy', 'DeployController@deploy');

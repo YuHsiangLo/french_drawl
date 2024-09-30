@@ -31,8 +31,9 @@
                     <br/>
                     @endif
                     <br/>
-                    <a href="{{ route('consent_forms.export') }}">Export All Submissions to .CSV</a> |
-                    <a href="{{ route('admin') }}">Go Back to the Admin Dashboard</a>
+                        <a href="{{ route('consent_forms.export') }}">Export All Submissions to .CSV</a> |
+                        <a href="{{ route('consent_forms.download_all_recordings') }}">Download All Recordings</a> |
+                        <a href="{{ route('admin') }}">Go Back to the Admin Dashboard</a>
                 </div>
             </div>
             @endif

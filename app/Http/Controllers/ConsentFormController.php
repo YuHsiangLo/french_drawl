@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Recording;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use App\ConsentForm;
 use App\Exports\ConsentFormsExport;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use ZipArchive;
 
 class ConsentFormController extends Controller
 {
@@ -120,5 +123,20 @@ class ConsentFormController extends Controller
         return redirect('admin')->with('error', 'You are not currently authorized to manage submissions!');
     }
 
+    public function download_all_recordings() {
+        $zip = new \ZipArchive();
+        $fileName = 'frenchDRAWL_recordings.zip';
+        $recordings = Recording::all();
+        if ($zip->open(public_path($fileName), \ZipArchive::CREATE) === true) {
+            foreach ($recordings as $recording) {
+                $zip->addFile(
+                    storage_path('app/audio/' . $recording->consent_form_id . '/' . $recording->recording_filename),
+                    'audio/'.$recording->consent_form_id.'/'.$recording->recording_filename
+                );
+            }
+            $zip->close();
+        }
 
+        return response()->download(public_path($fileName))->deleteFileAfterSend(true);
+    }
 }

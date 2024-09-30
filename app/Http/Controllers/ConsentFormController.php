@@ -148,6 +148,11 @@ class ConsentFormController extends Controller
             $zip = new \ZipArchive();
             $fileName = 'frenchDRAWL_recording_'.$id.'.zip';
             $recordings = app(\App\Recording::class)->where('consent_form_id', $id)->get();
+
+            if ($recordings->count() === 0) {
+                return back()->with('error', 'This submission does not have recordings.');
+            }
+
             if ($zip->open(public_path($fileName), \ZipArchive::CREATE) === true) {
                 foreach ($recordings as $recording) {
                     $zip->addFile(

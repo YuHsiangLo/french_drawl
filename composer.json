@@ -18,7 +18,8 @@
         "maatwebsite/excel": "^3.1",
         "mariuzzo/laravel-js-localization": "^1.7",
         "mjducharme/laravel-model-json-storage": "^1.0",
-        "nebed/laravel-ua-parser": "^1.0"
+        "nebed/laravel-ua-parser": "^1.0",
+        "revolution/laravel-google-sheets": "^5.8"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

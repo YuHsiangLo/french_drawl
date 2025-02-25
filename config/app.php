@@ -232,7 +232,6 @@ return [
     ],
 
     'wlar_languages' => [
-        [ "name" => "English", "id" => "en" ],
         [ "name" => "Français", "id" => "fr"]
     ],
     'wlar_email_required' => false,

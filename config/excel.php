@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+use Maatwebsite\Excel\DefaultValueBinder;
 use Maatwebsite\Excel\Excel;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
 
 return [
     'exports' => [
@@ -14,7 +18,7 @@ return [
         | Here you can specify how big the chunk should be.
         |
         */
-        'chunk_size'             => 1000,
+        'chunk_size' => env('EXCEL_CHUNK_SIZE', 1000),
 
         /*
         |--------------------------------------------------------------------------
@@ -25,19 +29,31 @@ return [
 
         /*
         |--------------------------------------------------------------------------
+        | Enable strict null comparison
+        |--------------------------------------------------------------------------
+        |
+        | When enabling strict null comparison empty cells ('') will
+        | be added to the sheet.
+        */
+        'strict_null_comparison' => false,
+
+        /*
+        |--------------------------------------------------------------------------
         | CSV Settings
         |--------------------------------------------------------------------------
         |
         | Configure e.g. delimiter, enclosure and line ending for CSV exports.
         |
         */
-        'csv'                    => [
+        'csv' => [
             'delimiter'              => ',',
             'enclosure'              => '"',
             'line_ending'            => PHP_EOL,
             'use_bom'                => false,
             'include_separator_line' => false,
             'excel_compatibility'    => false,
+            'output_encoding'        => '',
+            'test_auto_detect'       => true,
         ],
 
         /*
@@ -48,7 +64,7 @@ return [
         | Configure e.g. default title, creator, subject,...
         |
         */
-        'properties'             => [
+        'properties' => [
             'creator'        => '',
             'lastModifiedBy' => '',
             'title'          => '',
@@ -59,9 +75,21 @@ return [
             'manager'        => '',
             'company'        => '',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Custom source handlers
+        |--------------------------------------------------------------------------
+        |
+        | Register class names that implement SheetSourceHandler or
+        | QueuedSheetSourceHandler. They are resolved from the service container
+        | and take priority over the built-in From* handlers.
+        |
+        */
+        'source_handlers' => [],
     ],
 
-    'imports'            => [
+    'imports' => [
 
         /*
         |--------------------------------------------------------------------------
@@ -75,6 +103,19 @@ return [
         |
         */
         'read_only' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Ignore Empty
+        |--------------------------------------------------------------------------
+        |
+        | When dealing with imports, you might be interested in ignoring
+        | rows that have null values or empty strings. By default rows
+        | containing empty strings or empty values are not ignored but can be
+        | ignored by enabling the setting ignore_empty to true.
+        |
+        */
+        'ignore_empty' => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -97,12 +138,12 @@ return [
         | Configure e.g. delimiter, enclosure and line ending for CSV imports.
         |
         */
-        'csv'         => [
-            'delimiter'        => ',',
+        'csv' => [
+            'delimiter'        => null,
             'enclosure'        => '"',
             'escape_character' => '\\',
             'contiguous'       => false,
-            'input_encoding'   => 'UTF-8',
+            'input_encoding'   => Csv::GUESS_ENCODING,
         ],
 
         /*
@@ -113,7 +154,7 @@ return [
         | Configure e.g. default title, creator, subject,...
         |
         */
-        'properties'  => [
+        'properties' => [
             'creator'        => '',
             'lastModifiedBy' => '',
             'title'          => '',
@@ -123,6 +164,21 @@ return [
             'category'       => '',
             'manager'        => '',
             'company'        => '',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cell Middleware
+        |--------------------------------------------------------------------------
+        |
+        | Configure middleware that is executed on getting a cell value
+        |
+        */
+        'cells' => [
+            'middleware' => [
+                // \Maatwebsite\Excel\Middleware\TrimCellValue::class,
+                // \Maatwebsite\Excel\Middleware\ConvertEmptyCellValuesToNull::class,
+            ],
         ],
 
     ],
@@ -162,7 +218,7 @@ return [
         | Available options: Excel::MPDF | Excel::TCPDF | Excel::DOMPDF
         |
         */
-        'pdf'      => Excel::DOMPDF,
+        'pdf' => Excel::DOMPDF,
     ],
 
     /*
@@ -183,7 +239,7 @@ return [
     |
     */
     'value_binder' => [
-        'default' => Maatwebsite\Excel\DefaultValueBinder::class,
+        'default' => DefaultValueBinder::class,
     ],
 
     'cache' => [
@@ -195,7 +251,7 @@ return [
         | By default PhpSpreadsheet keeps all cell values in memory, however when
         | dealing with large files, this might result into memory issues. If you
         | want to mitigate that, you can configure a cell caching driver here.
-        | When using the illuminate driver, it will store each value in a the
+        | When using the illuminate driver, it will store each value in the
         | cache store. This can slow down the process, because it needs to
         | store each value. You can use the "batch" store if you want to
         | only persist to the store when the memory limit is reached.
@@ -203,7 +259,7 @@ return [
         | Drivers: memory|illuminate|batch
         |
         */
-        'driver'     => 'memory',
+        'driver' => env('EXCEL_CACHE_DRIVER', 'memory'),
 
         /*
         |--------------------------------------------------------------------------
@@ -215,8 +271,8 @@ return [
         | Here you can tweak the memory limit to your liking.
         |
         */
-        'batch'     => [
-            'memory_limit' => 60000,
+        'batch' => [
+            'memory_limit' => env('EXCEL_CACHE_BATCH_MEMORY', 60000),
         ],
 
         /*
@@ -232,8 +288,22 @@ return [
         |
         */
         'illuminate' => [
-            'store' => null,
+            'store' => env('EXCEL_CACHE_STORAGE'),
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cache Time-to-live (TTL)
+        |--------------------------------------------------------------------------
+        |
+        | The TTL of items written to cache. If you want to keep the items cached
+        | indefinitely, set this to null.  Otherwise, set a number of seconds,
+        | a \DateInterval, or a callable.
+        |
+        | Allowable types: callable|\DateInterval|int|null
+        |
+         */
+        'default_ttl' => 10800,
     ],
 
     /*
@@ -253,6 +323,9 @@ return [
     */
     'transactions' => [
         'handler' => 'db',
+        'db'      => [
+            'connection' => null,
+        ],
     ],
 
     'temporary_files' => [
@@ -264,9 +337,26 @@ return [
         |
         | When exporting and importing files, we use a temporary file, before
         | storing reading or downloading. Here you can customize that path.
+        | permissions is an array with the permission flags for the directory (dir)
+        | and the create file (file).
         |
         */
-        'local_path'          => storage_path('framework/laravel-excel'),
+        'local_path' => storage_path('framework/cache/laravel-excel'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | Local Temporary Path Permissions
+        |--------------------------------------------------------------------------
+        |
+        | Permissions is an array with the permission flags for the directory (dir)
+        | and the create file (file).
+        | If omitted the default permissions of the filesystem will be used.
+        |
+        */
+        'local_permissions' => [
+            // 'dir'  => 0755,
+            // 'file' => 0644,
+        ],
 
         /*
         |--------------------------------------------------------------------------
@@ -282,8 +372,8 @@ return [
         | in conjunction with queued imports and exports.
         |
         */
-        'remote_disk'         => null,
-        'remote_prefix'       => null,
+        'remote_disk'   => null,
+        'remote_prefix' => null,
 
         /*
         |--------------------------------------------------------------------------

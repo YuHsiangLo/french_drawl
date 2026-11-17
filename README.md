@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/mjducharme/drawl-website.svg?branch=master)](https://travis-ci.com/mjducharme/drawl-website)
+[![Build Status](https://travis-ci.com/mjducharme/drawl-website.svg?branch=master)](https://travis-ci.org/mjducharme/drawl-website)
 
 ## About WLAR - Web Linguistics Audio Recorder
 
@@ -14,6 +14,8 @@ WLAR is developed using the Laravel framework on PHP.
 - Michael Ducharme
 
 ### Installation
+
+Requires PHP 8.3 or newer (tested on PHP 8.5) with the gd, mbstring, xml, zip, pdo_sqlite and intl extensions, and Composer 2. The app runs on Laravel 13.
 
 Needs more detail, but:
 
